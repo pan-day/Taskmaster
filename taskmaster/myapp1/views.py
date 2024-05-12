@@ -8,7 +8,8 @@ from .forms import TaskForm
 
 def index(request):  #создаем метод index
     tasks = Task.objects.all()  # получаем все обьекты из модели Task(tasks - список)
-    return render(request, 'myapp1/index.html', {'title': 'Главная страница сайта', 'tasks': tasks})  # с помощью render можем указать, какой html шаблон будет подключен, в кавычках будет шаблон страницы
+    object_count = 100 - (Task.objects.all().count())  # считаем количество элементов в БД
+    return render(request, 'myapp1/index.html', {'title': 'Главная страница сайта', 'tasks': tasks, 'object_count': object_count})  # с помощью render можем указать, какой html шаблон будет подключен, в кавычках будет шаблон страницы
 
 def about(request):
     return render(request, 'myapp1/about-us.html')  # выводит определенный html текст на страничку
@@ -39,8 +40,5 @@ def delete(request, id):
     except Task.DoesNotExist:
         return HttpResponseNotFound("<h2>Task not found</h2>")
     
-def object_count(request):
-    count = Task.objects.all().count()
-    return render(request, 'index', {'count': count})  # считаем количество элементов в БД
 
 
