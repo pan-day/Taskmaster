@@ -38,3 +38,9 @@ def delete(request, id):
         return HttpResponseRedirect("/")
     except Task.DoesNotExist:
         return HttpResponseNotFound("<h2>Task not found</h2>")
+    
+def object_count(request):
+    count = Task.objects.all().count()
+    return render(request, 'index', {'count': count})  # считаем количество элементов в БД
+
+
